@@ -1,7 +1,7 @@
 export default {
   async fetch(request, env) {
     try {
-      if (!env.BGP_KV) {
+      if (!env.SANDBOX_KV) {
         return new Response("KV binding not found!", { status: 500 });
       }
 
@@ -9,10 +9,10 @@ export default {
 
       if (url.pathname === "/api/message") {
         // Example: store a value in KV
-        await env.BGP_KV.put("message", "Hello from KV 🚀");
+        await env.SANDBOX_KV.put("message", "Hello from KV New test 🚀");
 
         // Retrieve the value
-        const message = await env.BGP_KV.get("message") || "No value yet";
+        const message = await env.SANDBOX_KV.get("message") || "No value yet";
 
         return new Response(JSON.stringify({ message }), {
           headers: { "Content-Type": "application/json" }

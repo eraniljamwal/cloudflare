@@ -1,8 +1,9 @@
-name = "cloudflare-worker-kv"
+name = "sandbox-kv"
 main = "worker.js"
 compatibility_date = "2026-03-16"
 
 [[kv_namespaces]]
-binding = "BGP_KV"                   # ✅ safe JS variable
-id = "3b405a7635014e199b241d45c412fedc"
-preview_id = "ff32d753440b4ca5ba11c0185c7828b5"
+binding = "SANDBOX_KV"
+id = "5b1e95de1c9a48e8bd40010fef98ef0f"
+preview_id = "f14544fa0d3546278c6cc1fe1a1460bf"
+
