@@ -1,16 +1,31 @@
 export default {
   async fetch(request, env) {
-    // Check KV binding exists
-    if (!env.BGP_Sandbox_KV) {
-      return new Response("KV binding not found!", { status: 500 })
+    try {
+      if (!env.BGP_KV) {
+        return new Response("KV binding not found!", { status: 500 });
+      }
+
+      const url = new URL(request.url);
+
+      if (url.pathname === "/api/message") {
+        // Example: store a value in KV
+        await env.BGP_KV.put("message", "Hello from KV 🚀");
+
+        // Retrieve the value
+        const message = await env.BGP_KV.get("message") || "No value yet";
+
+        return new Response(JSON.stringify({ message }), {
+          headers: { "Content-Type": "application/json" }
+        });
+      }
+
+      // Default: frontend placeholder
+      return new Response("Worker running. Use /api/message", {
+        headers: { "Content-Type": "text/plain" }
+      });
+
+    } catch (err) {
+      return new Response("Worker error: " + err.message, { status: 500 });
     }
-
-    // Write to KV
-    await env.BGP_Sandbox_KV.put("message", "I am new KV 🚀")
-
-    // Read from KV
-    const message = await env.BGP_Sandbox_KV.get("message")
-
-    return new Response(message, { headers: { "Content-Type": "text/plain" } })
   }
 }
