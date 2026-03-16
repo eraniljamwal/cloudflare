@@ -1,22 +1,16 @@
 export default {
   async fetch(request, env) {
-    try {
-      // Save to KV
-      await env.cloudflare.put("message", "Hello from KV I am from github 🚀")
-
-      // Read from KV
-      const message = await env.cloudflare.get("message")
-
-      // Return as plain text
-      return new Response(message, {
-        headers: { "Content-Type": "text/plain" }
-      })
-
-    } catch (err) {
-      return new Response("Worker error: " + err.message, {
-        status: 500,
-        headers: { "Content-Type": "text/plain" }
-      })
+    // Check KV binding exists
+    if (!env.BGP_Sandbox_KV) {
+      return new Response("KV binding not found!", { status: 500 })
     }
+
+    // Write to KV
+    await env.BGP_Sandbox_KV.put("message", "I am new KV 🚀")
+
+    // Read from KV
+    const message = await env.BGP_Sandbox_KV.get("message")
+
+    return new Response(message, { headers: { "Content-Type": "text/plain" } })
   }
 }
