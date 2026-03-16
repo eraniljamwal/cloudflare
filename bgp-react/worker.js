@@ -9,7 +9,7 @@ export default {
 
       if (url.pathname === "/api/message") {
         // Example: store a value in KV
-        await env.SANDBOX_KV.put("message", "Hello from KV New test 🚀");
+        await env.SANDBOX_KV.put("message", "Hello from KV New test 123 🚀");
 
         // Retrieve the value
         const message = await env.SANDBOX_KV.get("message") || "No value yet";
