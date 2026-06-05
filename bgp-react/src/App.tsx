@@ -11,7 +11,7 @@ function App() {
   }, []);
 
   return (
-    <div>
+  
       <h1>React + Cloudflare Worker KV</h1>
       <p>{message}</p>
     </div>
